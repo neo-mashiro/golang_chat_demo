@@ -61,6 +61,7 @@ func removeConnMap(cid int64) {
 	fmt.Printf("remove %d\n", cid)
 }
 
+// 将所有已连接的client加入到一个map中，Key为该client的唯一标识，Value为net.Conn 对象
 var gConnMap = make(map[int64]net.Conn)
 var gMapLock sync.Mutex
 

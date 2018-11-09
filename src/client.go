@@ -13,7 +13,7 @@ import (
 // 得到一行输入并发送
 func scanLineAndSend(conn net.Conn, name []byte, wg *sync.WaitGroup) error {
 	defer wg.Done()
-	fmt.Printf("Input and press enter to send:\n")
+	fmt.Printf("Input text and press enter to send:\n")
 	for {
 		var c byte
 		var err error
@@ -83,8 +83,11 @@ func main() {
 
 	var wg sync.WaitGroup
 	wg.Add(1)
+
 	go scanLineAndSend(conn, []byte(os.Args[3]), &wg)
 	go recvMsgAndShow(conn, &wg)
+
+	// 任何一个goroutine退出则进程退出
 	wg.Wait()
 
 }

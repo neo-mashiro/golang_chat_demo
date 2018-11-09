@@ -16,14 +16,14 @@ import (
 type Message struct {
 	PayloadLen int32 // sendername + msgdatalen + msgdata
 	SenderName []byte
-	MsgDataLen int32
+	MsgDataLen int32 // 这个字段其实不必要，用 PayloadLen - 16即是 MsgData的长度
 	MsgData    []byte
 
 	Cid int64
 }
 
 /*
- * 从socket读取c-type struct，转换成golang struct Message.
+ * 从socket读取c-style struct，转换成golang struct Message.
  */
 func ReadMessage(conn net.Conn) (*Message, error) {
 
@@ -67,7 +67,7 @@ func ReadMessage(conn net.Conn) (*Message, error) {
 }
 
 /*
- * 将struct Message 序列化成 c-type struct, 进行发送
+ * 将struct Message 序列化成 c-style struct, 进行发送
  */
 func WriteMessage(conn net.Conn, msg *Message) (int, error) {
 
